@@ -52,6 +52,7 @@
 						<a href="javascript:;" onclick="comment('蝙蝠侠：黑暗骑士')" class="comment_btn">我来写短评</a>
 					</div>
 					<div id="comment0"></div>
+					<a href="javascript:;" onclick="layer.msg('功能开发中')" class="search_btn" id="search0">查看更多短评</a>
 				</div>
 			</div>
 		</div>
@@ -156,7 +157,7 @@
 		</div>
 
 		<div class="col-md-12" style="margin: 30px 0;text-align: center;">
-			使用<a href="https://nebulas.io/">星云链</a>驱动，<a href="https://incentive.nebulas.io/cn/signup.html?invite=32KAi">提交DAPP获得100NAS</a>
+			使用<a href="https://nebulas.io/">星云链</a>驱动，<a href="https://incentive.nebulas.io/cn/signup.html?invite=kpXCH">提交DAPP获得100NAS</a>
 		</div>
 
 		<div id="myModal" class="hide">
@@ -173,12 +174,11 @@
 	<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/Cover3D.js"></script>
 	<script>
-        var NebPay = require("nebpay"); //https://github.com/nebulasio/nebPay
+        var NebPay = require("nebpay");
         var nebPay = new NebPay();
 
-        //检查扩展是否已安装，如果安装了扩展，“webExtensionWallet”将被注入到web页面中1
+        //检查扩展是否已安装，如果安装了扩展，“webExtensionWallet”将被注入到web页面中
         if(typeof(webExtensionWallet) === "undefined") {
-            //alert ("扩展钱包未安装，请先安装.")
             $("#noExtension").show();
         }
 
@@ -199,9 +199,9 @@
             var to = dappAddress;
             var value = "0";
             var callFunction = "getAllComment";
-            var callArgs = "[]"; //in the form of ["args"]
-            nebPay.simulateCall(to, value, callFunction, callArgs, { //使用nebpay的simulateCall接口去执行get查询, 模拟执行.不发送交易,不上链
-                listener: cbSearch //指定回调函数
+            var callArgs = "[]";
+            nebPay.simulateCall(to, value, callFunction, callArgs, {
+                listener: cbSearch
             });
         }
 
@@ -209,6 +209,25 @@
             if(!resp.result) return;
             var result = eval(JSON.parse(resp.result));
             if(result !== 'null') {
+                var compare = function (obj1, obj2) {
+                    var val1 = obj1.goodNum;
+                    var val2 = obj2.goodNum;
+                    if (val1 < val2) {
+                        return -1;
+                    } else if (val1 > val2) {
+                        return 1;
+                    } else {
+                        if(obj1.submitTime < obj2.submitTime ){
+                            return -1;
+						} else if(obj1.submitTime < obj2.submitTime ){
+                            return 1;
+						} else {
+                            return 0;
+						}
+                    }
+                }
+                result.sort(compare);
+
                 var array = ["蝙蝠侠：黑暗骑士","钢铁侠 Iron Man","木乃伊 The Mummy","夺宝奇兵 Raiders of the Lost Ark","机器人总动员 WALL·E",
 					"卡萨布兰卡 Casablanc","泰坦尼克号 Titanic","复仇者联盟 The Avengers"];
                 for(var i=0; i<array.length; i++) {
@@ -224,10 +243,13 @@
                                 html = html.replace("{{submitTime}}", result[j].submitTime);
                                 html = html.replace("{{goodNum}}", result[j].goodNum);
                                 $("#comment" + i).append(html);
-                                length += 1;
                             }
+                            length += 1;
                         }
                     }
+                    if(length > 2){
+                        $("#search" + i).show();
+					}
                 }
             }
         }
@@ -257,7 +279,7 @@
                     callArgs.push(filmName);
                     callArgs.push(comment);
                     callArgs.push(submitTime);
-                    nebPay.call(to, value, callFunction, JSON.stringify(callArgs), { //使用nebpay的call接口去调用合约,
+                    nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
                         listener: cbPush
                     });
                     layer.close(index);
@@ -275,17 +297,18 @@
         }
 
         function getDateStr(date) {
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate
-            }
-            var currentdate = year + "-" + month + "-" + strDate;
-            return currentdate;
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            var h = date.getHours();
+            h= h < 10 ? ('0' + h) : h;
+            var minute = date.getMinutes();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            var second=date.getSeconds();
+            second = second < 10 ? ('0' + second) : second;
+            return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
         }
 
         function good(commentPkid) {
@@ -294,7 +317,7 @@
             var callFunction = "good";
             var callArgs = [];
             callArgs.push(commentPkid);
-            nebPay.call(to, value, callFunction, JSON.stringify(callArgs), { //使用nebpay的call接口去调用合约,
+            nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
                 listener: cbPush2
             });
 		}

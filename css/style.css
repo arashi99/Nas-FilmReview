@@ -49,6 +49,29 @@
 	margin-right: 4px;
 }
 
+.search_btn {
+	display: none;
+	height: auto;
+	color: #1b1a1b;
+	background: #94d4ff;
+	border-radius: 2px;
+	float: left;
+	line-height: 13px;
+	padding: 8px 12px 6px 12px;
+}
+.search_btn:link, .search_btn:visited {
+	color: #1b1a1b;
+	background: #94d4ff;
+}
+.search_btn:before {
+	content: '';
+	background: no-repeat url(../img/icon/search.png) center/contain;
+	width: 13px;
+	height: 13px;
+	float: left;
+	margin-right: 4px;
+}
+
 #noExtension{
 	padding-top: 200px;
     text-align: center;

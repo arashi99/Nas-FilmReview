@@ -193,6 +193,9 @@
         $('#cover7').CoverTresD();
         $('#cover8').CoverTresD();
 
+        setInterval(function() {
+            getAllComment();
+        }, 15000);
         getAllComment();
 
         function getAllComment() {

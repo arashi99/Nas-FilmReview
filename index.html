@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>电影迷的小空间</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="css/mdui.min.css">
+		<link rel="stylesheet" href="css/Cover3D.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+	</head>
+
+	<body class="mdui-theme-primary-blue-grey">
+		<div class="mdui-toolbar mdui-color-theme mdui-appbar-fixed" style="z-index: 1000;">
+			<span class="mdui-typo-title">电影迷的小空间</span>
+			<div class="mdui-toolbar-spacer"></div>
+			<a href="https://github.com/nebulasio" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: '查看 Github'}">
+				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon" style="width: 24px;height:24px;">
+							<path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M18,1.4C9,1.4,1.7,8.7,1.7,17.7c0,7.2,4.7,13.3,11.1,15.5
+		c0.8,0.1,1.1-0.4,1.1-0.8c0-0.4,0-1.4,0-2.8c-4.5,1-5.5-2.2-5.5-2.2c-0.7-1.9-1.8-2.4-1.8-2.4c-1.5-1,0.1-1,0.1-1
+		c1.6,0.1,2.5,1.7,2.5,1.7c1.5,2.5,3.8,1.8,4.7,1.4c0.1-1.1,0.6-1.8,1-2.2c-3.6-0.4-7.4-1.8-7.4-8.1c0-1.8,0.6-3.2,1.7-4.4
+		c-0.2-0.4-0.7-2.1,0.2-4.3c0,0,1.4-0.4,4.5,1.7c1.3-0.4,2.7-0.5,4.1-0.5c1.4,0,2.8,0.2,4.1,0.5c3.1-2.1,4.5-1.7,4.5-1.7
+		c0.9,2.2,0.3,3.9,0.2,4.3c1,1.1,1.7,2.6,1.7,4.4c0,6.3-3.8,7.6-7.4,8c0.6,0.5,1.1,1.5,1.1,3c0,2.2,0,3.9,0,4.5
+		c0,0.4,0.3,0.9,1.1,0.8c6.5-2.2,11.1-8.3,11.1-15.5C34.3,8.7,27,1.4,18,1.4z"></path>
+						</svg>
+			</a>
+		</div>
+		<div id="template" style="display: none;">
+			<div class="col-md-12" style="margin-top: 10px;">
+				<div style="float: left;">
+					<span style="color: #37a; margin-right: 20px;">{{author}}</span><span style="color: #aaa;">{{submitTime}}</span>
+				</div>
+				<a href="javascript:;" class="good_btn" onclick="good('{{pkid}}')">点赞 {{goodNum}}</a>
+			</div>
+			<div class="col-md-12 content">
+				{{comment}}
+			</div>
+			<div class="col-md-12">
+				<hr style="height:1px;border:none;border-top:1px solid #dddddd;margin: 10px 0;" />
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 90px;" id="app" v-clock>
+			<div class="col-md-3">
+				<div id="cover1">
+					<img src="img/film01.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">蝙蝠侠：黑暗骑士</p>
+					<div class="fright" style="float: right;">
+						<a href="javascript:;" onclick="comment('蝙蝠侠：黑暗骑士')" class="comment_btn">我来写短评</a>
+					</div>
+					<div id="comment0"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover2">
+					<img src="img/film02.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">钢铁侠 Iron Man</p>
+					<a href="javascript:;" onclick="comment('钢铁侠 Iron Man')" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment1"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover3">
+					<img src="img/film03.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">木乃伊 The Mummy</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment2"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover4">
+					<img src="img/film04.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">夺宝奇兵 Raiders of the Lost Ark</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment3"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover5">
+					<img src="img/film05.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">机器人总动员 WALL·E</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment4"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover6">
+					<img src="img/film06.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">卡萨布兰卡 Casablanc</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment5"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover7">
+					<img src="img/film07.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">泰坦尼克号 Titanic</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment6"></div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top: 30px;">
+			<div class="col-md-3">
+				<div id="cover8">
+					<img src="img/film10.jpg"/>
+				</div>
+			</div>
+			<div class="col-md-9" style="height:370px;">
+				<div>
+					<p style="float: left; font-size: 28px;">复仇者联盟 The Avengers</p>
+					<a href="javascript:;" onclick="comment()" class="comment_btn">我来写短评</a>
+				</div>
+				<div id="comment7"></div>
+			</div>
+		</div>
+
+		<div class="col-md-12" style="margin: 30px 0;text-align: center;">
+			使用<a href="https://nebulas.io/">星云链</a>驱动，<a href="https://incentive.nebulas.io/cn/signup.html?invite=32KAi">提交DAPP获得100NAS</a>
+		</div>
+
+		<div id="myModal" class="hide">
+			<div style="text-align: center; margin-top: 10px;">
+				<textarea id="comment" cols="47" rows="4"></textarea>
+			</div>
+		</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="js/mdui.min.js"></script>
+	<script src="js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/nebPay.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/Cover3D.js"></script>
+	<script>
+        var NebPay = require("nebpay"); //https://github.com/nebulasio/nebPay
+        var nebPay = new NebPay();
+
+        //检查扩展是否已安装，如果安装了扩展，“webExtensionWallet”将被注入到web页面中1
+        if(typeof(webExtensionWallet) === "undefined") {
+            //alert ("扩展钱包未安装，请先安装.")
+            $("#noExtension").show();
+        }
+
+        var dappAddress = "n1okGVQPgCNdtp32hA5RMAYKfPwWZfRANDX";
+
+        $('#cover1').CoverTresD();
+        $('#cover2').CoverTresD();
+        $('#cover3').CoverTresD();
+        $('#cover4').CoverTresD();
+        $('#cover5').CoverTresD();
+        $('#cover6').CoverTresD();
+        $('#cover7').CoverTresD();
+        $('#cover8').CoverTresD();
+
+        getAllComment();
+
+        function getAllComment() {
+            var to = dappAddress;
+            var value = "0";
+            var callFunction = "getAllComment";
+            var callArgs = "[]"; //in the form of ["args"]
+            nebPay.simulateCall(to, value, callFunction, callArgs, { //使用nebpay的simulateCall接口去执行get查询, 模拟执行.不发送交易,不上链
+                listener: cbSearch //指定回调函数
+            });
+        }
+
+        function cbSearch(resp) {
+            if(!resp.result) return;
+            var result = eval(JSON.parse(resp.result));
+            if(result !== 'null') {
+                var array = ["蝙蝠侠：黑暗骑士","钢铁侠 Iron Man","木乃伊 The Mummy","夺宝奇兵 Raiders of the Lost Ark","机器人总动员 WALL·E",
+					"卡萨布兰卡 Casablanc","泰坦尼克号 Titanic","复仇者联盟 The Avengers"];
+                for(var i=0; i<array.length; i++) {
+                    $("#comment" + i).empty();
+                    var length = 0;
+                    for (var j = 0; j < result.length; j++) {
+                        if (result[j].filmName == array[i]) {
+                            if (length <= 2) {
+                                var html = $("#template").html();
+                                html = html.replace("{{pkid}}", result[j].pkid);
+                                html = html.replace("{{author}}", result[j].author);
+                                html = html.replace("{{comment}}", result[j].comment);
+                                html = html.replace("{{submitTime}}", result[j].submitTime);
+                                html = html.replace("{{goodNum}}", result[j].goodNum);
+                                $("#comment" + i).append(html);
+                                length += 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function comment(filmName) {
+            layer.open({
+                title:"简短影评",
+                type: 1,
+                scrollbar: false,
+                area:['400px', '200px'],
+                content: $('#myModal'),
+                btn: ['确定发布', '取消'],
+                yes: function(index, layero){
+                    if($("#comment").val() == '') {
+                        layer.alert('影评不能为空哟！');
+                        return;
+                    } else if($("#comment").val() > 200) {
+                        layer.alert('影评太长了！');
+                        return;
+                    }
+                    var comment = $("#comment").val();
+                    var submitTime = getDateStr(new Date());
+                    var to = dappAddress;
+                    var value = "0";
+                    var callFunction = "saveComment";
+                    var callArgs = [];
+                    callArgs.push(filmName);
+                    callArgs.push(comment);
+                    callArgs.push(submitTime);
+                    nebPay.call(to, value, callFunction, JSON.stringify(callArgs), { //使用nebpay的call接口去调用合约,
+                        listener: cbPush
+                    });
+                    layer.close(index);
+                },btn2: function(index, layero){
+                    layer.close(index);
+                },cancel: function(){
+                    layer.close();
+                }
+            });
+            $('#myModal').removeClass("hide");
+        }
+
+        function cbPush(resp) {
+            $("#comment").val('')
+        }
+
+        function getDateStr(date) {
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate
+            }
+            var currentdate = year + "-" + month + "-" + strDate;
+            return currentdate;
+        }
+
+        function good(commentPkid) {
+            var to = dappAddress;
+            var value = "0";
+            var callFunction = "good";
+            var callArgs = [];
+            callArgs.push(commentPkid);
+            nebPay.call(to, value, callFunction, JSON.stringify(callArgs), { //使用nebpay的call接口去调用合约,
+                listener: cbPush2
+            });
+		}
+
+        function cbPush2(resp) {
+            getAllComment();
+        }
+	</script>
+	</body>
+</html>
